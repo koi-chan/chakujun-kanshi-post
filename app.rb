@@ -3,7 +3,7 @@ require 'zbar'
 require 'rmagick'
 
 get '/' do
-  'running!'
+  erb(:index)
 end
 
 post '/' do
