@@ -2,20 +2,23 @@ require 'sinatra'
 require 'zbar'
 require 'rmagick'
 
-post '/' do
-  @response = nil
+get '/' do
+  'running!'
+end
 
+post '/' do
   if(params[:image])
-    image = Magick::Image.read(params[:image][:tempfile]).first.strip!.to_blob do
+    image = Magick::Image.from_blob(params[:image][:tempfile].read).first.to_blob do
       self.format = 'PGM'
     end
+
     decoded = ZBar::Image.from_pgm(image).process
     decoded.map! do |code|
       "#{code.symbology}:#{code.data}"
     end
 
-    @response = decoded
+    decoded
   else
-    @response = 'Error'
+    'Error'
   end
 end
