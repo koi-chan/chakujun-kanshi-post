@@ -7,6 +7,7 @@ get '/' do
 end
 
 post '/' do
+  pp params
   if(params[:image])
     image = Magick::Image.from_blob(params[:image][:tempfile].read).first.to_blob do
       self.format = 'PGM'
