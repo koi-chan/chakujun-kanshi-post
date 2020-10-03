@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'zbar'
 require 'rmagick'
+require 'json'
 
 get '/' do
   erb(:index)
@@ -18,7 +19,7 @@ post '/' do
       "#{code.symbology}:#{code.data}"
     end
 
-    decoded
+    JSON.generate(decoded)
   else
     'Error'
   end
